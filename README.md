@@ -10,7 +10,13 @@
   <img src="screens/3.png" width="180"/>
   <img src="screens/4.png" width="180"/>
   <img src="screens/5.png" width="180"/>
+  <img src="screens/6.png" width="180"/>
+  <img src="screens/7.png" width="180"/>
 </p>
+
+### Admin panel
+
+<img src="screens/8.png" width="180"/>
 
 ## О проекте
 
