@@ -4,8 +4,9 @@ import { UserModule } from './user/user.module'
 import { CategoriesModule } from './categories/categories.module'
 import { ProductsModule } from './products/products.module'
 import { OrdersModule } from './orders/orders.module'
+import { StatsModule } from './stats/stats.module'
 
 @Module({
-  imports: [PrismaModule, UserModule, CategoriesModule, ProductsModule, OrdersModule],
+  imports: [PrismaModule, UserModule, CategoriesModule, ProductsModule, OrdersModule, StatsModule],
 })
 export class CrudModule {}

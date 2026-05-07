@@ -7,6 +7,8 @@ import { corsOptions } from './utils/cors'
 import { onBootstrapComplete, onBootstrapError } from './utils/bootstrap/setup'
 import { SwaggerTheme, SwaggerThemeNameEnum } from 'swagger-themes'
 import { ZodValidationPipe } from './common/pipes'
+import { StatsInterceptor } from './common/interceptors/stats.interceptor'
+import { PrismaService } from './prisma/prisma.service'
 
 async function bootstrap() {
   console.log(cliColor.green('✅ NestJS application is starting...'))
@@ -25,6 +27,8 @@ async function bootstrap() {
 
   app.enableCors(corsOptions)
   app.useGlobalPipes(new ZodValidationPipe())
+  app.useGlobalInterceptors(new StatsInterceptor(app.get(PrismaService)))
+
   await app.listen(3000)
 }
 

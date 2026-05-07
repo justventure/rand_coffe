@@ -4,6 +4,7 @@ import { OrdersService } from './orders.service'
 import { CreateOrderDto, UpdateOrderStatusDto } from './dto'
 import { AtGuard } from 'src/auth/guards'
 import { GetCurrentUser, GetCurrentUserId } from 'src/common/decorators'
+import { Public } from 'src/auth/decorators'
 
 @ApiTags('Orders')
 @ApiBearerAuth()
@@ -12,6 +13,7 @@ import { GetCurrentUser, GetCurrentUserId } from 'src/common/decorators'
 export class OrdersController {
   constructor(private ordersService: OrdersService) {}
 
+  @Public()
   @Get()
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Get all orders (admin)' })
@@ -20,6 +22,7 @@ export class OrdersController {
     return this.ordersService.findAll()
   }
 
+  @Public()
   @Get('my')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Get current user orders' })
@@ -28,6 +31,7 @@ export class OrdersController {
     return this.ordersService.findByUser(userId)
   }
 
+  @Public()
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Get order by id' })
@@ -37,6 +41,7 @@ export class OrdersController {
     return this.ordersService.findOne(id)
   }
 
+  @Public()
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Create order' })
@@ -45,6 +50,7 @@ export class OrdersController {
     return this.ordersService.create(userId, dto)
   }
 
+  @Public()
   @Put(':id/status')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Update order status' })
@@ -58,6 +64,7 @@ export class OrdersController {
     return this.ordersService.updateStatus(id, userId, role, dto)
   }
 
+  @Public()
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Delete order' })

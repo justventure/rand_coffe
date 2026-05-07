@@ -62,6 +62,15 @@ model OrderItem {
   product   Product @relation(fields: [productId], references: [id], onDelete: Restrict)
 }
 
+model RequestStat {
+  id        String   @id @default(uuid()) @db.Uuid
+  endpoint  String
+  method    String
+  status    Int
+  success   Boolean
+  createdAt DateTime @default(now())
+}
+
 enum OrderStatus {
   PENDING
   CONFIRMED
