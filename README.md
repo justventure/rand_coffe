@@ -16,7 +16,7 @@
 
 ### Admin panel
 
-<img src="screens/8.png" width="180"/>
+<img src="screens/8.png"/>
 
 ## О проекте
 
