@@ -1,0 +1,70 @@
+services:
+  postgres:
+    image: ${PG_IMAGE}:${IMAGE_TAG_PG}
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRESQL_USERNAME: ${DATABASE_USERNAME}
+      POSTGRESQL_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRESQL_DATABASE: ${DATABASE_NAME}
+      TZ: 'Europe/Omsk'
+      BITNAMI_DEBUG: 'true'
+    ports:
+      - '${DATABASE_PORT}:${DATABASE_PORT}'
+    container_name: 'postgres'
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - backend
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '1m'
+        max-file: '3'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $DATABASE_USERNAME']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+    mem_limit: 2G
+    cpus: 4.0
+
+  # nestjs:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   image: ${NESTAPI_IMAGE}:${IMAGE_TAG}
+  #   env_file:
+  #     - prod.env
+  #   environment:
+  #     TZ: 'Europe/Omsk'
+  #   ports:
+  #     - '${BACKEND_PORT}:${BACKEND_PORT}'
+  #   depends_on:
+  #     postgres:
+  #       condition: service_started
+  #   container_name: 'nestjs-app'
+  #   networks:
+  #     - backend
+  #   restart: always
+  #   logging:
+  #     driver: 'json-file'
+  #     options:
+  #       max-size: '1m'
+  #       max-file: '3'
+  #   mem_limit: 2G
+  #   cpus: 4.0
+  #   sysctls:
+  #     net.core.somaxconn: 1024
+  #     net.ipv4.tcp_syncookies: 1
+
+volumes:
+  pg_data:
+networks:
+  backend:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.100.0/24
